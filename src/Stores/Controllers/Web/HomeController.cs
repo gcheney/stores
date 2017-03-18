@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Stores.Services;
 
 namespace Stores.Controllers.Web
@@ -10,10 +7,12 @@ namespace Stores.Controllers.Web
     public class HomeController : Controller
     {
         private IStoreRepository _storeRepo;
+        private ILogger<HomeController> _logger;
 
-        public HomeController(IStoreRepository storeRepo)
+        public HomeController(IStoreRepository storeRepo, ILoggerFactory loggerFactory)
         {
             _storeRepo = storeRepo;
+            _logger = loggerFactory.CreateLogger<HomeController>();
         } 
         
         [HttpGet]
@@ -28,6 +27,11 @@ namespace Stores.Controllers.Web
         {
             var stores = _storeRepo.GetAllStores();
 
+            if (stores == null)
+            {
+                return View("Error");
+            }
+
             return View(stores);
         }
 
@@ -39,6 +43,7 @@ namespace Stores.Controllers.Web
 
             if (store == null)
             {
+                _logger.LogInformation($"Unable to find store with number: {storeNumber}");
                 return NotFound();
             }
 
