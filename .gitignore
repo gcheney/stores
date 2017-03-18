@@ -1,6 +1,9 @@
 # OS FIles
 .DS_Store
 
+# VS Code Files
+.vscode
+
 
 # User-specific files
 *.suo
