@@ -5,7 +5,7 @@ namespace Stores.Services
 {
     public interface IStoreRepository
     {
-        IEnumerable<Store> GetStores();
+        IEnumerable<Store> GetAllStores();
 
         Store GetStore(int storeNumber);
 

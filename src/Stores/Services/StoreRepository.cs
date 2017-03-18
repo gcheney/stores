@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Stores.Models;
 
@@ -6,9 +7,18 @@ namespace Stores.Services
 {
     public class StoreRepository : IStoreRepository
     {
-        public IEnumerable<Store> GetStores()
+        private ICsvFileManager _csvFileManager;
+
+        public StoreRepository(ICsvFileManager csvFileManager)
         {
-            throw new NotImplementedException();
+            _csvFileManager = csvFileManager;
+        }
+
+        public IEnumerable<Store> GetAllStores()
+        {
+            var stores = _csvFileManager.GetFileData();
+            var validStores = stores.Where(s => !String.IsNullOrEmpty(s.StoreName));
+            return validStores;
         }
 
         public Store GetStore(int storeNumber)
