@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stores.Services;
+using Stores.ViewModels;
+using AutoMapper;
 
 namespace Stores.Controllers.Web
 {
@@ -29,10 +32,12 @@ namespace Stores.Controllers.Web
 
             if (stores == null)
             {
+                _logger.LogError("An error occured retrieving store data");
                 return View("Error");
             }
 
-            return View(stores);
+            var viewModel = Mapper.Map<IEnumerable<StoreViewModel>>(stores);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -47,7 +52,8 @@ namespace Stores.Controllers.Web
                 return NotFound();
             }
 
-            return View(store);
+            var viewModel = Mapper.Map<StoreViewModel>(store);
+            return View(viewModel);
         }
 
         public IActionResult Error()
