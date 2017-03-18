@@ -5,8 +5,8 @@ namespace Stores.Services
 {
     public interface ICsvFileManager
     {
-        IEnumerable<Store> GetFileContent();
+        IEnumerable<Store> GetFileData();
 
-        void SaveFileContent(IEnumerable<Store> stores);
+        void SaveFileData(IEnumerable<Store> stores);
     }
 }
