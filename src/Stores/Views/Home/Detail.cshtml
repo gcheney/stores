@@ -1,17 +1,41 @@
+@model Stores.Models.Store
+
 @{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Store Details";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<h2>Store Details</h2>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div>
+    <h4>Store Number: model.StoreNumber</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StoreName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreManagerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StoreManagerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OpeningTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OpeningTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosingTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ClosingTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Stores">Back to List</a>
+</div>

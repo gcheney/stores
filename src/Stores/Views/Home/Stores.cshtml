@@ -1,7 +1,53 @@
-@{
-    ViewData["Title"] = "About";
-}
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
+@model IEnumerable<Stores.Models.Store>
 
-<p>Use this area to provide additional information.</p>
+@{
+    ViewData["Title"] = "Store Index";
+}
+
+<h2>Store Index</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreManagerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OpeningTime)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.ClosingTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var store in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => store.StoreNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => store.StoreName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => store.StoreManagerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => store.OpeningTime)
+            </td>
+            <td>    
+                @Html.DisplayFor(modelItem => store.ClosingTime)
+            </td>
+            <td>
+                <a asp-action="Detail" asp-route-id="@store.StoreNumber">View Detail</a> 
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
