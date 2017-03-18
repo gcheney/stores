@@ -29,6 +29,10 @@ namespace Stores
         {
             // Add framework services.
             services.AddMvc();
+            services.AddLogging();
+            
+            // use lowercase routes
+            services.AddRouting(options => options.LowercaseUrls = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +57,9 @@ namespace Stores
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller="Home", action="Index" }
+                );
             });
         }
     }

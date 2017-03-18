@@ -4,25 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Stores.Controllers
+namespace Stores.Controllers.Web
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        [HttpGet]
+        [Route("/stores")]
+        public IActionResult Stores()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "All Stores.";
 
             return View();
         }
 
-        public IActionResult Contact()
+        [HttpGet]
+        [Route("/store/{storeNumber}")]
+        public IActionResult Detail(int storeNumber)
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = $"Your store id: {storeNumber}";
 
             return View();
         }
