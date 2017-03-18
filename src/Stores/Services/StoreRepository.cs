@@ -23,7 +23,12 @@ namespace Stores.Services
 
         public Store GetStore(int storeNumber)
         {
-            throw new NotImplementedException();
+            var storeList = _csvFileManager.GetFileData();
+            var store = storeList
+                .Where(s => s.StoreNumber == storeNumber)
+                .FirstOrDefault();
+                
+            return store;
         }
 
         public void AddStore(Store store)
