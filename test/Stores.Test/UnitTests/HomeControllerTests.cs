@@ -69,7 +69,45 @@ namespace Stores.Tests.UnitTests
             Assert.Equal("Error", errorResult.ViewName);
         }
 
-        
+        [Fact]
+        public async Task Detail_ReturnsViewResult_WithStore()
+        {
+            Console.WriteLine("Running test: Detail_ReturnsViewResult_WithStore");
+
+            // Arrange
+            var storeNumber = 1;
+            var mockRepo = new Mock<IStoreRepository>();
+            mockRepo.Setup(repo => repo.GetStore(storeNumber))
+                .Returns(GetTestStores().Where(s => s.StoreNumber == storeNumber).FirstOrDefault());
+            var controller = new HomeController(mockRepo.Object, new LoggerFactory());
+
+            // Act
+            var result = controller.Detail(storeNumber);
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsAssignableFrom<Store>(viewResult.ViewData.Model);
+            Assert.Equal(storeNumber, model.StoreNumber);
+        }
+
+        [Fact]
+        public async Task Detail_ReturnsNoutFoundResult_WhenStoreIsNull()
+        {
+            Console.WriteLine("Running test: Detail_ReturnsNoutFoundResult_WhenStoreIsNull");
+
+            // Arrange
+            var storeNumber = 11;
+            var mockRepo = new Mock<IStoreRepository>();
+            mockRepo.Setup(repo => repo.GetStore(storeNumber))
+                .Returns(GetTestStores().Where(s => s.StoreNumber == storeNumber).FirstOrDefault());
+            var controller = new HomeController(mockRepo.Object, new LoggerFactory());
+
+            // Act
+            var result = controller.Detail(storeNumber);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
 
         private IEnumerable<Store> GetTestStores()
         {
