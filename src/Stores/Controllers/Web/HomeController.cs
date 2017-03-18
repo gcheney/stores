@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Stores.Services;
 
 namespace Stores.Controllers.Web
 {
     public class HomeController : Controller
     {
+        private IStoreRepository _storeRepo;
+
+        public HomeController(IStoreRepository storeRepo)
+        {
+            _storeRepo = storeRepo;
+        } 
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -18,9 +26,9 @@ namespace Stores.Controllers.Web
         [Route("/stores")]
         public IActionResult Stores()
         {
-            ViewData["Message"] = "All Stores.";
+            var stores = _storeRepo.GetAllStores();
 
-            return View();
+            return View(stores);
         }
 
         [HttpGet]
