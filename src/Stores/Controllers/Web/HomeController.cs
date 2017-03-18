@@ -35,9 +35,14 @@ namespace Stores.Controllers.Web
         [Route("/store/{storeNumber}")]
         public IActionResult Detail(int storeNumber)
         {
-            ViewData["Message"] = $"Your store id: {storeNumber}";
+            var store = _storeRepo.GetStore(storeNumber);
 
-            return View();
+            if (store == null)
+            {
+                return NotFound();
+            }
+
+            return View(store);
         }
 
         public IActionResult Error()
