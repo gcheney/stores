@@ -45,7 +45,7 @@
                 @Html.DisplayFor(modelItem => store.ClosingTime)
             </td>
             <td>
-                <a asp-action="Detail" asp-route-id="@store.StoreNumber">View Detail</a> 
+                <a href="/store/@store.StoreNumber">View Details</a> 
             </td>
         </tr>
     }
