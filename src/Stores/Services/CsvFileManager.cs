@@ -8,17 +8,19 @@ namespace Stores.Services
 {
     public class CsvFileManager : ICsvFileManager
     {
+        private string _dataFile = "StoreData.csv";
+
         public IEnumerable<Store> GetFileData()
         {
-            var storeData = File.ReadAllLines("StoreData.csv")
-                   .Select(x => x.Split(','))
-                   .Select(x => new Store
+            var storeData = File.ReadAllLines( _dataFile)
+                   .Select(s => s.Split(','))
+                   .Select(s => new Store
                     {
-                        StoreNumber = int.Parse(x[0]),
-                        StoreName = x[1],
-                        StoreManagerName = String.IsNullOrEmpty(x[2]) ? "Unknown" : x[2],
-                        OpeningTime = String.IsNullOrEmpty(x[3]) ? "Unknown" : x[3],
-                        ClosingTime = String.IsNullOrEmpty(x[4]) ? "Unknown" : x[4]
+                        StoreNumber = int.Parse(s[0]),
+                        StoreName = s[1],
+                        StoreManagerName = String.IsNullOrEmpty(s[2]) ? "Unknown" : s[2],
+                        OpeningTime = String.IsNullOrEmpty(s[3]) ? "Unknown" : s[3],
+                        ClosingTime = String.IsNullOrEmpty(s[4]) ? "Unknown" : s[4]
                     });
 
             return storeData;
@@ -26,7 +28,10 @@ namespace Stores.Services
 
         public void SaveFileData(IEnumerable<Store> stores)
         {
-            throw new NotImplementedException();
+            var formattedStores = stores
+                .Select(s => $"{s.StoreNumber},{s.StoreName ?? ""},{s.StoreManagerName ?? ""},{s.OpeningTime ?? ""},{s.ClosingTime ?? ""}");
+
+            File.WriteAllLines(_dataFile, formattedStores);
         }
     }
 }
