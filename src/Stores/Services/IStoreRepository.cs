@@ -9,7 +9,7 @@ namespace Stores.Services
 
         Store GetStore(int storeNumber);
 
-        void AddStore(Store store);
+        bool AddStore(Store store);
 
         void UpdateStore(int storeNumber, Store store);
 

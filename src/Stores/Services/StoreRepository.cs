@@ -16,8 +16,9 @@ namespace Stores.Services
 
         public IEnumerable<Store> GetAllStores()
         {
-            var stores = _csvFileManager.GetFileData();
-            var validStores = stores.Where(s => !String.IsNullOrEmpty(s.StoreName));
+            var storeList = _csvFileManager.GetFileData();
+            var validStores = storeList
+                .Where(s => !String.IsNullOrEmpty(s.StoreName));
             return validStores;
         }
 
@@ -31,9 +32,17 @@ namespace Stores.Services
             return store;
         }
 
-        public void AddStore(Store store)
+        public bool AddStore(Store store)
         {
-            throw new NotImplementedException();
+            var storeList = _csvFileManager.GetFileData().ToList();
+            if (!storeList.Any(s => s.StoreNumber == store.StoreNumber))
+            {
+                storeList.Add(store);
+                _csvFileManager.SaveFileData(storeList);
+                return true;
+            }
+
+            return false;
         }
 
         public void UpdateStore(int storeNumber, Store store)
