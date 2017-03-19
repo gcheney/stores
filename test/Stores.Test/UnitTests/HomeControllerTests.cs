@@ -1,21 +1,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 using Stores.Services;
 using Stores.Models;
+using Stores.ViewModels;
 using Stores.Controllers.Web;
+using AutoMapper;
 
 namespace Stores.Tests.UnitTests
 {
     public class HomeControllerTests
     {
+        public HomeControllerTests()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Store, StoreViewModel>().ReverseMap();
+            });
+        }
+
         [Fact]
-        public async Task Index_ReturnsAViewResult()
+        public void Index_ReturnsAViewResult()
         {
             Console.WriteLine("Running test: Index_ReturnsAViewResult");
 
@@ -31,14 +40,13 @@ namespace Stores.Tests.UnitTests
         }
 
         [Fact]
-        public async Task Stores_ReturnsAViewResult_WithAListOfStores()
+        public void Stores_ReturnsAViewResult_WithAListOfStores()
         {
             Console.WriteLine("Running test: Stores_ReturnsAViewResult_WithAListOfStores");
 
             // Arrange
             var mockRepo = new Mock<IStoreRepository>();
-            mockRepo.Setup(repo => repo.GetAllStores())
-                .Returns(GetTestStores());
+            mockRepo.Setup(repo => repo.GetAllStores()).Returns(GetTestStores());
             var controller = new HomeController(mockRepo.Object, new LoggerFactory());
 
             // Act
@@ -46,19 +54,18 @@ namespace Stores.Tests.UnitTests
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Store>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<IEnumerable<StoreViewModel>>(viewResult.ViewData.Model);
             Assert.Equal(3, model.Count());
         }
 
         [Fact]
-        public async Task Stores_ReturnsErrorViewResult_WhenStoreDataIsNull()
+        public void Stores_ReturnsErrorViewResult_WhenStoreDataIsNull()
         {
             Console.WriteLine("Running test: Stores_ReturnsErrorViewResult_WhenStoreDataIsNull");
 
             // Arrange
             var mockRepo = new Mock<IStoreRepository>();
-            mockRepo.Setup(repo => repo.GetAllStores())
-                .Returns(GetNullStores());
+            mockRepo.Setup(repo => repo.GetAllStores()).Returns(GetNullStores());
             var controller = new HomeController(mockRepo.Object, new LoggerFactory());
 
             // Act
@@ -70,7 +77,7 @@ namespace Stores.Tests.UnitTests
         }
 
         [Fact]
-        public async Task Detail_ReturnsViewResult_WithStore()
+        public void Detail_ReturnsViewResult_WithStore()
         {
             Console.WriteLine("Running test: Detail_ReturnsViewResult_WithStore");
 
@@ -86,12 +93,12 @@ namespace Stores.Tests.UnitTests
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<Store>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<StoreViewModel>(viewResult.ViewData.Model);
             Assert.Equal(storeNumber, model.StoreNumber);
         }
 
         [Fact]
-        public async Task Detail_ReturnsNoutFoundResult_WhenStoreIsNull()
+        public void Detail_ReturnsNoutFoundResult_WhenStoreIsNull()
         {
             Console.WriteLine("Running test: Detail_ReturnsNoutFoundResult_WhenStoreIsNull");
 
