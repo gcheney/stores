@@ -41,7 +41,7 @@ namespace Stores.Controllers.Web
         }
 
         [HttpGet]
-        [Route("/store/{storeNumber}")]
+        [Route("/store/{storeNumber}", Name="Detail")]
         public IActionResult Detail(int storeNumber)
         {
             var store = _storeRepo.GetStore(storeNumber);
