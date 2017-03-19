@@ -45,7 +45,7 @@
                 @Html.DisplayFor(modelItem => store.ClosingTime)
             </td>
             <td>
-                <a href="/store/@store.StoreNumber">View Details</a> 
+                @Html.RouteLink("View Details", "Detail", new { storeNumber = @store.StoreNumber })
             </td>
         </tr>
     }
