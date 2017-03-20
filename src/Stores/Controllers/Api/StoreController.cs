@@ -84,7 +84,12 @@ namespace Stores.Controllers.Api
         [HttpDelete("api/store/{storeNumber}")]
         public IActionResult DeleteStore(int storeNumber)
         {
-            return NoContent();
+            if (_storeRepo.DeleteStore(storeNumber))
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }
