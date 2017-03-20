@@ -40,23 +40,45 @@ namespace Stores.Controllers.Api
 
             var store = Mapper.Map<Store>(storeViewModel);
 
-            // store was successfully created
             if (_storeRepo.AddStore(store))
             {
+                // store was successfully created
                 return CreatedAtRoute("Detail", new {
                     storeNumber = store.StoreNumber
                 }, store);
             }
 
             return StatusCode(409, new {
-                ErrorMessage = "A resource with the specified StoreNumber already exist"
+                Message = "A resource with the specified StoreNumber already exist"
             });  
         }
 
         [HttpPost("api/store/{storeNumber}")]
-        public IActionResult UpdateStore(int storeNumber)
+        public IActionResult UpdateStore(int storeNumber, [FromBody] StoreViewModel storeViewModel)
         {
-            return Ok();
+            if (storeViewModel == null)
+            {
+                _logger.LogInformation("No data provided");
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogInformation("Invalid store data was provided");
+                return BadRequest(ModelState);
+            }
+
+            var store = Mapper.Map<Store>(storeViewModel);
+
+            if (_storeRepo.UpdateStore(storeNumber, store))
+            {
+                // store data was updated
+                return NoContent();
+            }
+            
+            return NotFound(new {
+                Message = "A resource with the specified storeNumber could not be located"
+            });
         }
 
         [HttpDelete("api/store/{storeNumber}")]
