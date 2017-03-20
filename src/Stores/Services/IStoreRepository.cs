@@ -11,7 +11,7 @@ namespace Stores.Services
 
         bool AddStore(Store store);
 
-        void UpdateStore(int storeNumber, Store store);
+        bool UpdateStore(int storeNumber, Store store);
 
         void DeleteStore(int storeNumber);
     }

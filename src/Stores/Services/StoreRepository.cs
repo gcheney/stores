@@ -17,17 +17,14 @@ namespace Stores.Services
         public IEnumerable<Store> GetAllStores()
         {
             var storeList = _csvFileManager.GetFileData();
-            var validStores = storeList
-                .Where(s => !String.IsNullOrEmpty(s.StoreName));
+            var validStores = storeList.Where(s => !String.IsNullOrEmpty(s.StoreName));
             return validStores;
         }
 
         public Store GetStore(int storeNumber)
         {
             var storeList = _csvFileManager.GetFileData();
-            var store = storeList
-                .Where(s => s.StoreNumber == storeNumber)
-                .FirstOrDefault();
+            var store = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
                 
             return store;
         }
@@ -45,9 +42,23 @@ namespace Stores.Services
             return false;
         }
 
-        public void UpdateStore(int storeNumber, Store store)
+        public bool UpdateStore(int storeNumber, Store store)
         {
-            throw new NotImplementedException();
+            var storeList = _csvFileManager.GetFileData().ToList();
+            var storeToUpdate = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
+
+            if (storeToUpdate != null)
+            {
+                storeToUpdate.StoreName  = store.StoreName ?? storeToUpdate.StoreName;
+                storeToUpdate.StoreManagerName = store.StoreManagerName ?? storeToUpdate.StoreManagerName;
+                storeToUpdate.OpeningTime = store.OpeningTime ?? storeToUpdate.OpeningTime;
+                storeToUpdate.ClosingTime = store.ClosingTime ?? storeToUpdate.ClosingTime;
+
+                _csvFileManager.SaveFileData(storeList);
+                return true;
+            }
+
+            return false;
         }
 
         public void DeleteStore(int storeNumber)
