@@ -29,9 +29,15 @@ namespace Stores.Services
         public void SaveFileData(IEnumerable<Store> stores)
         {
             var formattedStores = stores
-                .Select(s => $"{s.StoreNumber},{s.StoreName ?? ""},{s.StoreManagerName ?? ""},{s.OpeningTime ?? ""},{s.ClosingTime ?? ""}");
+                .Select(s => $"{s.StoreNumber},{s.StoreName ?? ""}," + 
+                    $"{GetPropValue(s.StoreManagerName)},{GetPropValue(s.OpeningTime)},{GetPropValue(s.ClosingTime)}");
 
             File.WriteAllLines(_dataFile, formattedStores);
+        }
+
+        private string GetPropValue(string prop)
+        {
+            return (prop == null || prop == "Unknown") ? "" : prop;
         }
     }
 }
