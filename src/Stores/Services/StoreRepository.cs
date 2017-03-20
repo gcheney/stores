@@ -17,14 +17,16 @@ namespace Stores.Services
         public IEnumerable<Store> GetAllStores()
         {
             var storeList = _csvFileManager.GetFileData();
-            var validStores = storeList.Where(s => !String.IsNullOrEmpty(s.StoreName));
+            var validStores = storeList.Where(s => !string.IsNullOrEmpty(s.StoreName));
             return validStores;
         }
 
         public Store GetStore(int storeNumber)
         {
             var storeList = _csvFileManager.GetFileData();
-            var store = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
+            var store = storeList
+                .FirstOrDefault(s => s.StoreNumber == storeNumber && !string.IsNullOrEmpty(s.StoreName));
+
             return store;
         }
 
