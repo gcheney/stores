@@ -43,7 +43,7 @@ namespace Stores.Services
 
         public bool UpdateStore(int storeNumber, Store store)
         {
-            var storeList = _csvFileManager.GetFileData();
+            var storeList = _csvFileManager.GetFileData().ToList();
             var storeToUpdate = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
             if (storeToUpdate != null)
             {
