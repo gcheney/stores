@@ -23,7 +23,7 @@ namespace Stores.Controllers.Api
         {
             if (storeViewModel == null)
             {
-                _logger.LogInformation("No data provided");
+                _logger.LogError("No data provided");
                 return BadRequest();
             }
 
@@ -34,7 +34,7 @@ namespace Stores.Controllers.Api
 
             if (!ModelState.IsValid)
             {
-                _logger.LogInformation("Invalid store data was provided");
+                _logger.LogError("Invalid store data was provided");
                 return BadRequest(ModelState);
             }
 
@@ -43,6 +43,7 @@ namespace Stores.Controllers.Api
             if (_storeRepo.AddStore(store))
             {
                 // store was successfully created
+                _logger.LogInformation($"New store added with #{store.StoreNumber}");
                 return CreatedAtRoute("Detail", new {
                     storeNumber = store.StoreNumber
                 }, store);
@@ -58,13 +59,13 @@ namespace Stores.Controllers.Api
         {
             if (storeViewModel == null)
             {
-                _logger.LogInformation("No data provided");
+                _logger.LogError("No data provided");
                 return BadRequest();
             }
 
             if (!ModelState.IsValid)
             {
-                _logger.LogInformation("Invalid store data was provided");
+                _logger.LogError("Invalid store data was provided");
                 return BadRequest(ModelState);
             }
 
@@ -73,6 +74,7 @@ namespace Stores.Controllers.Api
             if (_storeRepo.UpdateStore(storeNumber, store))
             {
                 // store data was updated
+                _logger.LogInformation($"Store number {storeNumber} has been updated");
                 return NoContent();
             }
             
@@ -86,10 +88,13 @@ namespace Stores.Controllers.Api
         {
             if (_storeRepo.DeleteStore(storeNumber))
             {
+                _logger.LogInformation($"Store number {storeNumber} has been deleted");
                 return NoContent();
             }
 
-            return NotFound();
+            return NotFound(new {
+                Message = "A resource with the specified storeNumber could not be located"
+            });
         }
     }
 }
