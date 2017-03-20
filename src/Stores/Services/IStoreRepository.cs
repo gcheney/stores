@@ -13,6 +13,6 @@ namespace Stores.Services
 
         bool UpdateStore(int storeNumber, Store store);
 
-        void DeleteStore(int storeNumber);
+        bool DeleteStore(int storeNumber);
     }
 }

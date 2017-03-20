@@ -25,7 +25,6 @@ namespace Stores.Services
         {
             var storeList = _csvFileManager.GetFileData();
             var store = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
-                
             return store;
         }
 
@@ -44,9 +43,8 @@ namespace Stores.Services
 
         public bool UpdateStore(int storeNumber, Store store)
         {
-            var storeList = _csvFileManager.GetFileData().ToList();
+            var storeList = _csvFileManager.GetFileData();
             var storeToUpdate = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
-
             if (storeToUpdate != null)
             {
                 storeToUpdate.StoreName  = store.StoreName ?? storeToUpdate.StoreName;
@@ -61,9 +59,18 @@ namespace Stores.Services
             return false;
         }
 
-        public void DeleteStore(int storeNumber)
+        public bool DeleteStore(int storeNumber)
         {
-            throw new NotImplementedException();
+            var storeList = _csvFileManager.GetFileData().ToList();            
+            var storeToRemove = storeList.SingleOrDefault( s => s.StoreNumber == storeNumber);
+            if (storeToRemove != null)
+            {
+               var result = storeList.Remove(storeToRemove);
+               _csvFileManager.SaveFileData(storeList);
+               return result;
+            }
+
+            return false;
         }
     }
 }
