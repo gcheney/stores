@@ -18,12 +18,14 @@ namespace Stores.Controllers.Web
             _logger = loggerFactory.CreateLogger<HomeController>();
         } 
         
+        // GET: /
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        // GET: /stores
         [HttpGet]
         [Route("/stores")]
         public IActionResult Stores()
@@ -40,6 +42,7 @@ namespace Stores.Controllers.Web
             return View(viewModel);
         }
 
+        // GET: /store/1
         [HttpGet]
         [Route("/store/{storeNumber}", Name="Detail")]
         public IActionResult Detail(int storeNumber)

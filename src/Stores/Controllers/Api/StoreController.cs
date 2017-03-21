@@ -18,6 +18,7 @@ namespace Stores.Controllers.Api
             _logger = loggerFactory.CreateLogger<StoreController>();
         } 
         
+        // POST: /api/store/add
         [HttpPost("api/store/add")]
         public IActionResult AddStore([FromBody] StoreViewModel storeViewModel)
         {
@@ -54,6 +55,7 @@ namespace Stores.Controllers.Api
             });  
         }
 
+        // POST: /api/store/1
         [HttpPost("api/store/{storeNumber}")]
         public IActionResult UpdateStore(int storeNumber, [FromBody] StoreViewModel storeViewModel)
         {
@@ -83,6 +85,7 @@ namespace Stores.Controllers.Api
             });
         }
 
+        // DELETE: /api/store/1
         [HttpDelete("api/store/{storeNumber}")]
         public IActionResult DeleteStore(int storeNumber)
         {
