@@ -16,14 +16,14 @@ namespace Stores.Services
 
         public IEnumerable<Store> GetAllStores()
         {
-            var storeList = _csvFileManager.GetFileData();
+            var storeList = _csvFileManager.GetStoreData();
             var validStores = storeList.Where(s => !string.IsNullOrEmpty(s.StoreName));
             return validStores;
         }
 
         public Store GetStore(int storeNumber)
         {
-            var storeList = _csvFileManager.GetFileData();
+            var storeList = _csvFileManager.GetStoreData();
             var store = storeList
                 .FirstOrDefault(s => s.StoreNumber == storeNumber && !string.IsNullOrEmpty(s.StoreName));
 
@@ -32,11 +32,11 @@ namespace Stores.Services
 
         public bool AddStore(Store store)
         {
-            var storeList = _csvFileManager.GetFileData().ToList();
+            var storeList = _csvFileManager.GetStoreData().ToList();
             if (!storeList.Any(s => s.StoreNumber == store.StoreNumber))
             {
                 storeList.Add(store);
-                _csvFileManager.SaveFileData(storeList);
+                _csvFileManager.SaveStoreData(storeList);
                 return true;
             }
 
@@ -45,7 +45,7 @@ namespace Stores.Services
 
         public bool UpdateStore(int storeNumber, Store store)
         {
-            var storeList = _csvFileManager.GetFileData().ToList();
+            var storeList = _csvFileManager.GetStoreData().ToList();
             var storeToUpdate = storeList.FirstOrDefault(s => s.StoreNumber == storeNumber);
             if (storeToUpdate != null)
             {
@@ -54,7 +54,7 @@ namespace Stores.Services
                 storeToUpdate.OpeningTime = store.OpeningTime ?? storeToUpdate.OpeningTime;
                 storeToUpdate.ClosingTime = store.ClosingTime ?? storeToUpdate.ClosingTime;
 
-                _csvFileManager.SaveFileData(storeList);
+                _csvFileManager.SaveStoreData(storeList);
                 return true;
             }
 
@@ -63,12 +63,12 @@ namespace Stores.Services
 
         public bool DeleteStore(int storeNumber)
         {
-            var storeList = _csvFileManager.GetFileData().ToList();            
+            var storeList = _csvFileManager.GetStoreData().ToList();            
             var storeToRemove = storeList.SingleOrDefault( s => s.StoreNumber == storeNumber);
             if (storeToRemove != null)
             {
                var result = storeList.Remove(storeToRemove);
-               _csvFileManager.SaveFileData(storeList);
+               _csvFileManager.SaveStoreData(storeList);
                return result;
             }
 

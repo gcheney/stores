@@ -10,7 +10,7 @@ namespace Stores.Services
     {
         private string _dataFile = "StoreData.csv";
 
-        public IEnumerable<Store> GetFileData()
+        public IEnumerable<Store> GetStoreData()
         {
             var storeData = File.ReadAllLines( _dataFile)
                    .Select(s => s.Split(','))
@@ -26,7 +26,7 @@ namespace Stores.Services
             return storeData;
         }
 
-        public void SaveFileData(IEnumerable<Store> stores)
+        public void SaveStoreData(IEnumerable<Store> stores)
         {
             var formattedStores = stores
                 .Select(s => $"{s.StoreNumber},{s.StoreName ?? ""}," + 

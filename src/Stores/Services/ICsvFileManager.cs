@@ -11,12 +11,12 @@ namespace Stores.Services
 		/// <returns>
 		/// IEnumerable<Store> of store data
 		/// </returns>
-        IEnumerable<Store> GetFileData();
+        IEnumerable<Store> GetStoreData();
 
         /// <summary>
 		/// Writes the provided IEnumerable<Store> store data to a CSV file, one element per line
 		/// </summary>
 		/// <param name="stores">The store data to write</param>
-        void SaveFileData(IEnumerable<Store> stores);
+        void SaveStoreData(IEnumerable<Store> stores);
     }
 }
