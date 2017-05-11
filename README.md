@@ -2,9 +2,9 @@
 
 Contains pages to display data about stores and an API to update the store data.
 
-Bult with ```.NET Core 1.1``` Version ```1.0.0-preview2-1-003177```. 
+Built with ```.NET Core 1.1``` Version ```1.0.0-preview2-1-003177```. 
 
-To run the project:
+To run the project locally:
 
 ```git clone https://github.com/gcheney/stores.git```
 
