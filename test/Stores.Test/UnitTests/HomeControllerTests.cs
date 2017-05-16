@@ -118,34 +118,33 @@ namespace Stores.Tests.UnitTests
 
         private IEnumerable<Store> GetTestStores()
         {
-            var stores = new List<Store>();
-
-            stores.Add(new Store()
+            var stores = new List<Store>()
             {
-                StoreNumber = 1,
-                StoreName = "Austin",
-                StoreManagerName = "Joe Smith",
-                OpeningTime = "7:00 AM",
-                ClosingTime = "8:00pm"
-            });
-
-            stores.Add(new Store()
-            {
-                StoreNumber = 2,
-                StoreName = "San Antonio",
-                StoreManagerName = "Jack Smith",
-                OpeningTime = "8:00 AM",
-                ClosingTime = "9:00pm"
-            });
-
-            stores.Add(new Store()
-            {
-                StoreNumber = 3,
-                StoreName = "Dallas",
-                StoreManagerName = "James Smith",
-                OpeningTime = "9:00 AM",
-                ClosingTime = "10:00pm"
-            });
+                new Store()
+                {
+                    StoreNumber = 1,
+                    StoreName = "Austin",
+                    StoreManagerName = "Joe Smith",
+                    OpeningTime = "7:00 AM",
+                    ClosingTime = "8:00pm"
+                },
+                new Store()
+                {
+                    StoreNumber = 2,
+                    StoreName = "San Antonio",
+                    StoreManagerName = "Jack Smith",
+                    OpeningTime = "8:00 AM",
+                    ClosingTime = "9:00pm"
+                },
+                new Store()
+                {
+                    StoreNumber = 2,
+                    StoreName = "San Antonio",
+                    StoreManagerName = "Jack Smith",
+                    OpeningTime = "8:00 AM",
+                    ClosingTime = "9:00pm"
+                }
+            };
 
             return stores;
         }
