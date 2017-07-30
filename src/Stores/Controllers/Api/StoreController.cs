@@ -55,8 +55,8 @@ namespace Stores.Controllers.Api
             });  
         }
 
-        // POST: /api/store/1
-        [HttpPost("api/store/{storeNumber}")]
+        // PUT: /api/store/1
+        [HttpPut("api/store/{storeNumber}")]
         public IActionResult UpdateStore(int storeNumber, [FromBody] StoreViewModel storeViewModel)
         {
             if (storeViewModel == null)
